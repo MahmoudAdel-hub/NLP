@@ -7,19 +7,13 @@ import numpy as np
 
 list_classes = ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
 
-# Load model architecture
-with open("model.json", "r") as json_file:
-    loaded_model_json = json_file.read()
-loaded_model = model_from_json(loaded_model_json)
 
-# Load model weights
-loaded_model.load_weights("model_weights.h5")
 
-# Load the tokenizer
-with open('tokenizer.pickle', 'rb') as handle:
-    loaded_tokenizer = pickle.load(handle)
     
 def preprocess_input(text):
+    # Load the tokenizer
+    with open('tokenizer.pickle', 'rb') as handle:
+        loaded_tokenizer = pickle.load(handle)
     # Tokenize text
     tokenized_text = loaded_tokenizer.texts_to_sequences([text])
     # Pad sequences
@@ -30,6 +24,13 @@ def preprocess_input(text):
 
 def predict_class(text):
     padded_text = preprocess_input(text)
+    # Load model architecture
+    with open("model.json", "r") as json_file:
+        loaded_model_json = json_file.read()
+    loaded_model = model_from_json(loaded_model_json)
+
+    # Load model weights
+    loaded_model.load_weights("model_weights.h5")
     
     return loaded_model.predict(padded_text) # Assuming prediction are a multiple values
 

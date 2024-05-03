@@ -5,15 +5,16 @@ from keras.preprocessing.sequence import pad_sequences
 import numpy as np
 
 
+
 list_classes = ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
 
 
 
+# Load the tokenizer
+with open('tokenizer.pickle', 'rb') as handle:
+    loaded_tokenizer = pickle.load(handle)    
     
 def preprocess_input(text):
-    # Load the tokenizer
-    with open('tokenizer.pickle', 'rb') as handle:
-        loaded_tokenizer = pickle.load(handle)
     # Tokenize text
     tokenized_text = loaded_tokenizer.texts_to_sequences([text])
     # Pad sequences

@@ -1,4 +1,4 @@
 tensorflow
-keras
+keras == 2.13.1
 streamlit==1.33.0
 numpy
